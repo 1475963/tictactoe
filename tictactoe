@@ -7,24 +7,28 @@ import consts as Consts
 from Board import Board
 import tk_draw
 
-''' Initialize game '''
+DEBUG = False
 
 
 def main(args):
-    print('creating Board ...')
+    ''' Initialize game '''
+    if DEBUG:
+        print('creating Board ...')
     board = Board()
-    print('... board created')
-    print('initial field : ')
-    print(board.field)
+    if DEBUG:
+        print('... board created')
+        print('initial field : ')
+        print(board.field)
     instance = tk_draw.get_instance()
-    window = tk_draw.get_window(instance)
+    window = tk_draw.get_window(instance, board)
     tk_draw.draw_board(window, board)
-    tk_draw.do_mainloop()
-    print('out')
-
-''' Entry point '''
+    tk_draw.attachUpdater(instance, window, board)
+    tk_draw.attachMainloop(instance)
+    if DEBUG:
+        print('out')
 
 if __name__ == '__main__':
+    ''' Entry point '''
     if len(sys.argv) in (1, 2):
         main(sys.argv[1:])
     else:
